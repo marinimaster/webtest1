@@ -11,12 +11,36 @@
     <div class="login-container">
         <h2>Login</h2>
         <form>
-            <label for="Username">Username:</label><br>
-            <input type="text" id="Username" name="Username"><br><br>
+            <label for="Email">Email:</label><br>
+            <input type="text" id="Email" name="Email" required /><br><br>
             <label for="Password">Password:</label><br>
-            <input type="Password" id="Password" name="Password"><br><br>
+            <input type="Password" id="Password" name="Password" required /><br><br>
             <button type="submit">Login</button>
         </form>
+
+        <p id="result"></p>
     </div>
+
+    <script>
+        const form = document.getElementById("login-form");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById("Email").value;
+            const password = document.getElementById("Password").value;
+
+            const response = await fetch("https://webtest1-2vo9.onrender.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const result = await response.json();
+            document.getElementById("result").textContent = result.message;
+        });
+    </script>
 </body>
 </html>
